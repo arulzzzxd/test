@@ -1,1075 +1,1068 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment kai</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KaizelScript Store - Script Bot & Jasa Digital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
     <style>
-        :root {
-            --bg-gradient-start: #0a0a1f;
-            --bg-gradient-mid: #1a1a2e;
-            --bg-gradient-end: #16213e;
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.75);
-            --text-tertiary: rgba(255, 255, 255, 0.6);
-            --title-gradient-start: #a855f7;
-            --title-gradient-mid: #6366f1;
-            --title-gradient-end: #8b5cf6;
-            --accent-color: #6366f1;
-            --accent-hover: #7c3aed;
-            --modal-bg: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            --modal-border: rgba(255, 255, 255, 0.15);
-            --toggle-bg: rgba(255, 255, 255, 0.08);
-            --toggle-border: rgba(255, 255, 255, 0.15);
-            --shadow-color: rgba(0, 0, 0, 0.25);
-            --copy-success-color: #10b981;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-
-        body.light-mode {
-            --bg-gradient-start: #f8fafc;
-            --bg-gradient-mid: #e2e8f0;
-            --bg-gradient-end: #cbd5e1;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --text-tertiary: #64748b;
-            --title-gradient-start: #7c3aed;
-            --title-gradient-mid: #6366f1;
-            --title-gradient-end: #a855f7;
-            --accent-color: #6366f1;
-            --accent-hover: #4f46e5;
-            --modal-bg: linear-gradient(135deg, #ffffff, #f8fafc);
-            --modal-border: rgba(0, 0, 0, 0.1);
-            --toggle-bg: rgba(0, 0, 0, 0.05);
-            --toggle-border: rgba(0, 0, 0, 0.1);
-            --shadow-color: rgba(0, 0, 0, 0.15);
-            --copy-success-color: #059669;
-            --glass-bg: rgba(0, 0, 0, 0.02);
-            --glass-border: rgba(0, 0, 0, 0.08);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; 
-            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 50%, var(--bg-gradient-end) 100%); 
-            min-height: 100vh; 
-            color: var(--text-primary); 
-            position: relative; 
-            overflow-x: hidden; 
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .bg-particle { 
-            position: fixed; 
-            border-radius: 50%; 
-            pointer-events: none; 
-            opacity: 0.12;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            transition: all 0.5s ease;
-            filter: blur(0.5px);
-        }
-        .particle-1 { width: 80px; height: 80px; top: 15%; right: 10%; animation: float1 8s ease-in-out infinite; }
-        .particle-2 { width: 60px; height: 60px; top: 65%; left: 12%; animation: float2 10s ease-in-out infinite; }
-        .particle-3 { width: 40px; height: 40px; top: 85%; right: 25%; animation: float3 9s ease-in-out infinite; }
-        .particle-4 { width: 50px; height: 50px; top: 35%; left: 8%; animation: float2 7s ease-in-out infinite; }
-        .particle-5 { width: 35px; height: 35px; top: 50%; right: 5%; animation: float3 11s ease-in-out infinite; }
-
-        @keyframes float1 { 
-            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); } 
-            33% { transform: translateY(-25px) rotate(120deg) scale(1.1); }
-            66% { transform: translateY(10px) rotate(240deg) scale(0.9); }
-        }
-        @keyframes float2 { 
-            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); } 
-            50% { transform: translateY(20px) rotate(180deg) scale(1.05); } 
-        }
-        @keyframes float3 { 
-            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); } 
-            25% { transform: translateY(-15px) rotate(90deg) scale(1.08); }
-            75% { transform: translateY(5px) rotate(270deg) scale(0.95); }
-        }
-
-        .glass-effect {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-
-        .container { max-width: 390px; margin: 0 auto; min-height: 100vh; position: relative; }
-        
-        .top-section { 
-            padding: 60px 32px 80px 32px; 
-            position: relative; 
-        }
-
-        .theme-toggle { 
-            position: absolute; 
-            top: 24px; 
-            right: 24px; 
-            width: 56px; 
-            height: 56px; 
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border); 
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            cursor: pointer; 
-            font-size: 24px; 
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-        .theme-toggle:hover { 
-            background: rgba(255, 255, 255, 0.15); 
-            transform: scale(1.1) rotate(10deg); 
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
-        }
-        .theme-toggle:active { transform: scale(0.95); }
-
-        .status-indicator {
-            position: absolute;
-            top: 24px;
-            left: 24px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 8px 16px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--copy-success-color);
-        }
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--copy-success-color);
-            border-radius: 50%;
-            animation: pulse-dot 2s infinite;
-        }
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
-        .header { text-align: center; margin-top: 60px; }
-        
-        .logo-wrapper { 
-            position: relative; 
-            display: inline-block; 
-            margin-bottom: 60px; 
-        }
-        .outer-circle { 
-            position: absolute; 
-            width: 180px; 
-            height: 180px; 
-            border: 2px solid rgba(102, 126, 234, 0.25); 
-            border-radius: 50%; 
-            top: 50%; 
-            left: 50%; 
-            transform: translate(-50%, -50%); 
-            animation: rotate-slow 25s linear infinite; 
-        }
-        .inner-circle { 
-            position: absolute; 
-            width: 140px; 
-            height: 140px; 
-            border: 2px solid rgba(118, 75, 162, 0.3); 
-            border-radius: 50%; 
-            top: 50%; 
-            left: 50%; 
-            transform: translate(-50%, -50%); 
-            animation: rotate-reverse 18s linear infinite; 
-        }
-        .middle-circle {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: rotate-slow 12s linear infinite;
-        }
-        
-        @keyframes rotate-slow { 
-            from { transform: translate(-50%, -50%) rotate(0deg); } 
-            to { transform: translate(-50%, -50%) rotate(360deg); } 
-        }
-        @keyframes rotate-reverse { 
-            from { transform: translate(-50%, -50%) rotate(0deg); } 
-            to { transform: translate(-50%, -50%) rotate(-360deg); } 
-        }
-
-        .logo-circle { 
-            position: relative; 
-            width: 100px; 
-            height: 100px; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #8b5cf6 100%); 
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            box-shadow: 0 25px 50px rgba(102, 126, 234, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2); 
-            z-index: 10;
-            transition: all 0.3s ease;
-        }
-        .logo-circle:hover {
-            transform: scale(1.05);
-            box-shadow: 0 30px 60px rgba(102, 126, 234, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        }
-
-        .wallet-icon { 
-            width: 42px; 
-            height: 42px; 
-            background: white; 
-            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M18 4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM6 6h12v2H6V6zm0 4h12v8H6v-8z'/%3E%3C/svg%3E") center/contain; 
-        }
-
-        .notification-badge { 
-            position: absolute; 
-            top: -12px; 
-            right: -12px; 
-            width: 32px; 
-            height: 32px; 
-            background: linear-gradient(135deg, #ff4757, #ff3742); 
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            color: white; 
-            font-size: 14px; 
-            font-weight: 700; 
-            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.5); 
-            animation: pulse-notification 2.5s infinite; 
-            border: 3px solid var(--bg-gradient-start);
-        }
-        @keyframes pulse-notification { 
-            0%, 100% { transform: scale(1); } 
-            50% { transform: scale(1.15); } 
-        }
-
-        .title { 
-            font-size: 52px; 
-            font-weight: 900; 
-            line-height: 1.1; 
-            background: linear-gradient(135deg, var(--title-gradient-start) 0%, var(--title-gradient-mid) 50%, var(--title-gradient-end) 100%); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-            background-clip: text; 
-            letter-spacing: -2px; 
-            transition: all 0.5s ease;
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #0d1a2f;
+            color: #e2e8f0;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
             position: relative;
+            line-height: 1.6;
         }
-
-        .subtitle {
-            font-size: 16px;
-            color: var(--text-secondary);
-            margin-top: 16px;
-            font-weight: 500;
-        }
-
-        .main-content { 
-            padding: 0 32px 50px 32px; 
-        }
-
-        .section-title { 
-            font-size: 32px; 
-            font-weight: 800; 
-            color: var(--title-gradient-start); 
-            margin-bottom: 20px; 
-            transition: color 0.4s ease; 
-        }
-
-        .section-description { 
-            color: var(--text-secondary); 
-            font-size: 17px; 
-            line-height: 1.6; 
-            margin-bottom: 48px; 
-        }
-
-        .payment-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 28px;
-            margin-bottom: 20px;
+        a {
+            text-decoration: none;
+            color: inherit;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        ul {
+            list-style: none;
+        }
+        button, a[role="button"] {
+            font-family: inherit;
+            cursor: pointer;
+        }
+        button:focus, a:focus {
+            outline: 2px solid #3b82f6;
+            outline-offset: 2px;
         }
 
-        .payment-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.6s ease;
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-8px); }
+            60% { transform: translateY(-4px); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.3); }
+            50% { box-shadow: 0 0 15px rgba(16, 185, 129, 0.5); }
+        }
+        @keyframes scaleIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        @keyframes slide {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+        @keyframes pulse {
+            0% { border-color: rgba(102, 126, 234, 0.5); }
+            50% { border-color: rgba(118, 75, 162, 0.8); }
+            100% { border-color: rgba(102, 126, 234, 0.5); }
         }
 
-        .payment-card::after {
-            content: '';
-            position: absolute;
-            top: -2px; 
-            left: -2px;
-            width: calc(100% + 4px);
-            height: calc(100% + 4px);
-            border-radius: 24px;
-            background: conic-gradient(
-                from 180deg at 50% 50%, 
-                #8b5cf6 0%, 
-                #6366f1 25%, 
-                #10b981 50%, 
-                #f59e0b 75%, 
-                #8b5cf6 100%
-            );
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
+        .animate-slideDown { animation: slideDown 0.8s ease forwards; }
+        .animate-fadeInUp { animation: fadeInUp 0.6s ease forwards; }
+        .animate-fadeIn { animation: fadeIn 0.8s ease forwards; }
+        .animate-bounce { animation: bounce 2.5s infinite; }
+        .animate-float { animation: float 5s ease-in-out infinite; }
+        .animate-glow { animation: glow 2s infinite; }
+        .animate-scaleIn { animation: scaleIn 0.3s ease forwards; }
 
-        .payment-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: transparent;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1);
-        }
-
-        .payment-card:hover::before {
-            left: 100%;
-        }
-
-        .payment-card:hover::after {
-            opacity: 1;
-        }
-
-        .payment-card:active {
-            transform: translateY(-4px) scale(1.01);
-        }
-
-        .payment-content {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .payment-icon { 
-            width: 64px; 
-            height: 64px; 
-            border-radius: 20px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            flex-shrink: 0; 
-            position: relative;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-        }
-
-        .payment-card:hover .payment-icon {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
-        }
-
-        .dana { background: linear-gradient(135deg, #118EEA, #0066CC); }
-        .ovo { background: linear-gradient(135deg, #4C3FF7, #6C5CE7); }
-        .gopay { background: linear-gradient(135deg, #00AA13, #00D41A); }
-        .qris { background: linear-gradient(135deg, #FF6B35, #F7931E); }
-        .bank { background: linear-gradient(135deg, #DC2626, #B91C1C); }
-
-        .icon-phone, .icon-qris, .icon-bank { 
-            width: 32px; 
-            height: 32px; 
-            background: white; 
-            mask-size: contain;
-            mask-repeat: no-repeat;
-            mask-position: center;
-        }
-        .icon-phone { mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M17 2H7c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM7 4h10v14H7V4z'/%3E%3C/svg%3E"); }
-        .icon-qris { mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M3 11h8V3H3v8zm2-6h4v4H5V5zM3 21h8v-8H3v8zm2-6h4v4H5v-4zM13 3v8h8V3h-8zm6 6h-4V5h4v4zM19 13h2v2h-2zM13 13h2v2h-2zM15 15h2v2h-2zM13 17h2v2h-2zM15 19h2v2h-2zM17 17h2v2h-2zM17 13h2v2h-2zM19 15h2v2h-2z'/%3E%3C/svg%3E"); }
-        .icon-bank { mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 3L2 9h20L12 3zM4 10v7h16v-7H4zM6 12h2v3H6v-3zm4 0h2v3h-2v-3zm4 0h2v3h-2v-3zM2 18h20v2H2v-2z'/%3E%3C/svg%3E"); }
-
-        .payment-info { flex: 1; }
-        
-        .payment-name { 
-            font-size: 20px; 
-            font-weight: 800; 
-            color: var(--text-primary); 
-            margin-bottom: 8px; 
-        }
-        .payment-desc { 
-            font-size: 15px; 
-            color: var(--text-tertiary); 
-            margin-bottom: 6px; 
-            line-height: 1.4;
-        }
-        .payment-number { 
-            font-size: 14px; 
-            color: var(--accent-color); 
-            font-weight: 700; 
-            font-family: 'Monaco', 'Courier New', monospace;
-        }
-
-        .payment-arrow { 
-            width: 28px; 
-            height: 28px; 
-            background: var(--accent-color); 
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            flex-shrink: 0; 
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-        }
-
-        .payment-card:hover .payment-arrow {
-            background: white;
-            transform: scale(1.2) rotate(90deg);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .payment-card:hover .arrow-icon {
-            background: var(--accent-hover);
-        }
-
-        .arrow-icon { 
-            width: 14px; 
-            height: 14px; 
-            background: white; 
-            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M8.59 16.59L13.17 12L8.59 7.41L10 6l6 6-6 6-1.41-1.41z'/%3E%3C/svg%3E") center/contain; 
-            transition: all 0.3s ease; 
-        }
-
-        .modal { 
-            display: none; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(0, 0, 0, 0.85); 
-            z-index: 1000; 
-            backdrop-filter: blur(12px); 
-            opacity: 0; 
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-        }
-        .modal.show { opacity: 1; }
-
-        .modal-content { 
-            position: absolute; 
-            top: 50%; 
-            left: 50%; 
-            transform: translate(-50%, -50%) scale(0.8); 
-            background: var(--modal-bg); 
-            backdrop-filter: blur(25px);
-            border: 1px solid var(--modal-border); 
-            border-radius: 32px; 
-            padding: 40px; 
-            max-width: 380px; 
-            width: 90%; 
-            text-align: center; 
-            box-shadow: 0 40px 80px var(--shadow-color); 
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
-        }
-        .modal.show .modal-content { 
-            transform: translate(-50%, -50%) scale(1); 
-        }
-
-        .modal-title { 
-            font-size: 26px; 
-            font-weight: 800; 
-            margin-bottom: 32px; 
-            color: var(--text-primary); 
-            background: linear-gradient(135deg, var(--title-gradient-start), var(--title-gradient-end));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .modal-number { 
-            background: rgba(99, 102, 241, 0.15); 
-            border: 2px solid rgba(99, 102, 241, 0.3); 
-            border-radius: 20px; 
-            padding: 24px; 
-            font-size: 22px; 
-            font-weight: 700; 
-            color: var(--accent-color); 
-            margin-bottom: 32px; 
-            letter-spacing: 2px; 
-            font-family: 'Monaco', 'Courier New', monospace;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .modal-number::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        #modalQrImage { 
-            display: none; 
-            width: 220px; 
-            height: 220px; 
-            margin: 0 auto 32px auto; 
-            border-radius: 20px; 
-            background: white; 
-            padding: 16px; 
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-        #modalQrImage:hover {
-            transform: scale(1.05);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-        }
-
-        .modal-buttons { 
-            display: flex; 
-            gap: 16px; 
-        }
-
-        .modal-btn { 
-            flex: 1; 
-            padding: 18px 24px; 
-            border: none; 
-            border-radius: 16px; 
-            font-weight: 700; 
-            cursor: pointer; 
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-            font-size: 16px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .modal-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .modal-btn:hover::before {
-            left: 100%;
-        }
-
-        .btn-copy { 
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover)); 
-            color: white; 
-            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.4); 
-        }
-        .btn-copy:hover { 
-            transform: translateY(-3px); 
-            box-shadow: 0 16px 32px rgba(99, 102, 241, 0.5); 
-        }
-        .btn-copy:active { 
-            transform: translateY(-1px); 
-        }
-
-        .btn-close { 
-            background: rgba(255, 255, 255, 0.1); 
-            color: var(--text-secondary); 
-            border: 1px solid rgba(255, 255, 255, 0.2); 
-            backdrop-filter: blur(10px);
-        }
-        .btn-close:hover { 
-            background: rgba(255, 255, 255, 0.15); 
-            transform: translateY(-3px); 
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        body.light-mode .btn-close { 
-            background: rgba(0,0,0,0.05); 
-            border-color: rgba(0,0,0,0.1); 
-        }
-        body.light-mode .btn-close:hover { 
-            background: rgba(0,0,0,0.08); 
-        }
-
-        .copy-success { 
-            display: none; 
-            color: var(--copy-success-color); 
-            font-size: 16px; 
-            font-weight: 700; 
-            margin-top: 20px; 
-            animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
-            padding: 12px 20px;
-            background: rgba(16, 185, 129, 0.1);
-            border-radius: 12px;
-            border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-
-        @keyframes fadeInUp { 
-            from { opacity: 0; transform: translateY(20px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
-
-        .loading-overlay {
+        #header {
             position: fixed;
             top: 0;
             left: 0;
+            right: 0;
+            z-index: 50;
+            background: rgba(13, 26, 47, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        #header nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: clamp(1.5rem, 5vw, 1.875rem);
+            font-weight: 800;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            user-select: none;
+        }
+
+        #navMenu {
+            display: flex;
+            gap: 1.5rem;
+        }
+        #navMenu li a {
+            color: #a7b7cc;
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        #navMenu li a:hover {
+            color: #3b82f6;
+            transform: translateY(-2px);
+        }
+        #navMenu li a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        #navMenu li a:hover::after {
             width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+        }
+
+        #mobileMenuBtn {
+            display: none;
+            font-size: 1.5rem;
+            color: #a7b7cc;
+            background: none;
+            border: none;
+            transition: color 0.3s ease;
+        }
+        #mobileMenuBtn:hover {
+            color: #3b82f6;
+        }
+        #mobileMenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: rgba(13, 26, 47, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        #mobileMenu.open {
+            max-height: 500px;
+            padding: 1.5rem;
+        }
+        #mobileMenu a {
+            color: #a7b7cc;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        #mobileMenu a:hover {
+            color: #3b82f6;
+        }
+
+        @media (max-width: 768px) {
+            #navMenu {
+                display: none;
+            }
+            #mobileMenuBtn {
+                display: block;
+            }
+        }
+        @media (min-width: 769px) {
+            #mobileMenu {
+                display: none !important;
+            }
+        }
+        @media (max-width: 480px) {
+            #header nav {
+                padding: 0 1rem;
+            }
+            .logo {
+                font-size: 1.5rem;
+            }
+        }
+
+        #home {
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 1.5rem;
+            text-align: center;
         }
-
-        .loading-overlay.hidden {
-            opacity: 0;
-            visibility: hidden;
+        #home .decorative-icon {
+            position: absolute;
+            opacity: 0.1;
+            font-size: 2.5rem;
+            animation: float 5s ease-in-out infinite;
+            user-select: none;
+            color: white;
         }
-
-        .loading-spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(99, 102, 241, 0.2);
-            border-top: 4px solid var(--accent-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        #home .decorative-icon:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        #home .decorative-icon:nth-child(2) {
+            bottom: 25%;
+            right: 10%;
+            font-size: 3rem;
+            animation-delay: 2s;
         }
-
-        .stats-section {
+        #home .decorative-icon:nth-child(3) {
+            bottom: 33%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+        #home .hero-container {
+            max-width: 48rem;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+        #home h1 {
+            font-size: clamp(2rem, 6vw, 3rem);
+            font-weight: 900;
+            color: white;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        #home p {
+            font-size: clamp(1rem, 3vw, 1.25rem);
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 0.3s;
+        }
+        #home .hero-buttons {
             display: flex;
-            gap: 16px;
-            margin-bottom: 32px;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-primary, .btn-secondary {
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            text-align: center;
+        }
+        .btn-primary {
+            background: white;
+            color: #0f172a;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        .btn-primary:hover, .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        .btn-primary:active, .btn-secondary:active {
+            transform: translateY(0);
         }
 
-        .stat-card {
+        .section-title {
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: fadeInUp 0.8s ease forwards;
+            user-select: none;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 0 1.5rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+
+        .product-card {
+            background: linear-gradient(145deg, #1e2e4a, #1a2a40);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 2px solid transparent;
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08);
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+        .product-card:nth-child(5) { animation-delay: 0.5s; }
+        .product-card:nth-child(6) { animation-delay: 0.6s; }
+
+        .product-card:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 0 3px rgba(255, 255, 255, 0.15);
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.07);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+            z-index: 0;
+            transition: transform 0.4s ease-out, color 0.4s ease, text-shadow 0.4s ease;
+        }
+
+        .product-card:hover::before {
+            transform: rotate(15deg) scale(1.15);
+            color: rgba(255, 255, 255, 0.12);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .product-card:nth-child(1)::before { content: '\f232'; }
+        .product-card:nth-child(2)::before { content: '\f392'; }
+        .product-card:nth-child(3)::before { content: '\f2c6'; }
+        .product-card:nth-child(4)::before { content: '\f2bd'; }
+        .product-card:nth-child(5)::before { content: '\f0ad'; }
+        .product-card:nth-child(6)::before { content: '\f0ee'; }
+
+        .product-tag {
+            position: relative;
+            z-index: 1;
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .product-tag.trending { background: linear-gradient(90deg, #ef4444, #dc2626); }
+        .product-tag.ai { background: linear-gradient(90deg, #10b981, #059669); }
+        .product-tag.premium { background: linear-gradient(90deg, #f59e0b, #d97706); }
+        
+        .product-card:nth-child(4) .product-tag { background: linear-gradient(90deg, #3b82f6, #2563eb); }
+        .product-card:nth-child(5) .product-tag { background: linear-gradient(90deg, #a855f7, #9333ea); }
+        .product-card:nth-child(6) .product-tag { background: linear-gradient(90deg, #22d3ee, #06b6d4); }
+
+        .product-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #f8fafc;
+            margin-bottom: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-features {
+            margin-bottom: 1.8rem;
+            list-style: none;
+            padding-left: 0;
+        }
+        .product-features li {
+            padding: 0.5rem 0;
+            color: #cbd5e1;
+            position: relative;
+            animation: fadeInUp 0.5s ease forwards;
+            padding-left: 32px;
+            font-size: 1rem;
+        }
+        .product-features li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #10b981;
+            font-size: 1.2rem;
+        }
+
+        .product-price {
+            font-size: 1.9rem;
+            font-weight: 900;
+            color: #5eead4;
+            margin-bottom: 1.8rem;
+            text-shadow: 0 0 15px rgba(94, 234, 212, 0.6);
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-buttons {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-small {
+            padding: 0.9rem 1.6rem;
+            font-size: 1rem;
+            border-radius: 14px;
             flex: 1;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 20px 16px;
+            min-width: 130px;
+            font-weight: 600;
             text-align: center;
             transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+        .btn-outline:hover {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            transform: translateY(-3px);
+        }
+        .btn-success {
+            background: linear-gradient(90deg, #10b981, #059669);
+            color: white;
+            border: none;
+        }
+        .btn-success:hover {
+            background: linear-gradient(90deg, #059669, #047857);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+            transform: translateY(-3px);
         }
 
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+        #modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        #modal .modal-content {
+            background: #1e2e4a;
+            border-radius: 16px;
+            padding: 1.5rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: scaleIn 0.3s ease forwards;
+            color: #e2e8f0;
+        }
+        #modal .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            color: #a7b7cc;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        #modal .modal-close:hover {
+            color: #ef4444;
+            transform: scale(1.1);
+        }
+        #modal img {
+            width: 100%;
+            height: auto;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
         }
 
-        .stat-number {
-            font-size: 24px;
+        #promo .promo-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem 1.5rem;
+            border-radius: 16px;
+            margin: 2rem auto;
+            max-width: 1200px;
+            position: relative;
+            overflow: hidden;
+            animation: scaleIn 0.8s ease forwards;
+        }
+        #promo .promo-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 255, 255, 0.1) 10px, rgba(255, 255, 255, 0.1) 20px);
+            animation: slide 20s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        #promo .promo-banner > * {
+            position: relative;
+            z-index: 1;
+        }
+        #promo h2 {
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
             font-weight: 800;
-            color: var(--accent-color);
-            margin-bottom: 4px;
+            margin-bottom: 1rem;
+        }
+        #promo p {
+            font-size: clamp(1rem, 2.5vw, 1.125rem);
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
+            max-width: 36rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.75rem;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 60px;
+        }
+        .countdown-number {
+            font-size: 1.25rem;
+            font-weight: bold;
+            display: block;
+        }
+        .countdown-label {
+            font-size: 0.75rem;
+            opacity: 0.8;
         }
 
-        .stat-label {
-            font-size: 12px;
-            color: var(--text-tertiary);
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            padding: 0 1.5rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+        .contact-card {
+            background: #1e2e4a;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        .contact-card:nth-child(1) { animation-delay: 0.1s; }
+        .contact-card:nth-child(2) { animation-delay: 0.2s; }
+        .contact-card:nth-child(3) { animation-delay: 0.3s; }
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+        }
+        .contact-icon {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+            color: #5eead4;
+        }
+        .contact-card h3 {
+            font-size: 1.25rem;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+            color: #f8fafc;
+        }
+        .contact-card p {
+            color: #cbd5e1;
         }
 
-        @media (max-width: 480px) { 
-            .container { max-width: 100%; }
-            .title { font-size: 46px; }
-            .section-title { font-size: 28px; }
-            .top-section { padding: 50px 24px 70px 24px; }
-            .main-content { padding: 0 24px 40px 24px; }
-            .payment-card { padding: 24px; margin-bottom: 16px; }
-            .modal-content { padding: 32px 24px; }
+        @media (max-width: 768px) {
+            #home h1 {
+                font-size: clamp(1.75rem, 5vw, 2.25rem);
+            }
+            #home p {
+                font-size: clamp(0.875rem, 2.5vw, 1rem);
+            }
+            .product-grid, .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            #home .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.75rem;
+            }
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                max-width: 280px;
+            }
+            .countdown-item {
+                min-width: 50px;
+                padding: 0.5rem;
+            }
         }
-
-        @media (max-width: 360px) {
-            .title { font-size: 40px; }
-            .logo-circle { width: 80px; height: 80px; }
-            .outer-circle { width: 160px; height: 160px; }
-            .inner-circle { width: 120px; height: 120px; }
-            .payment-icon { width: 56px; height: 56px; }
-            .payment-content { gap: 20px; }
+        @media (max-width: 480px) {
+            #home {
+                padding: 1rem;
+            }
+            .section-title {
+                font-size: clamp(1.5rem, 4vw, 2rem);
+            }
+            .product-card, .contact-card {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
-<body>
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-spinner"></div>
-    </div>
+<body data-theme="dark">
+    <header id="header" class="animate-slideDown" role="banner">
+        <nav aria-label="Primary navigation">
+            <div class="logo" aria-label="KaizelScript Store Logo">KaizelScript</div>
+            <ul id="navMenu" role="menu">
+                <li role="none"><a href="#home" role="menuitem">Beranda</a></li>
+                <li role="none"><a href="#scripts" role="menuitem">Script Bot</a></li>
+                <li role="none"><a href="#services" role="menuitem">Jasa Digital</a></li>
+                <li role="none"><a href="#promo" role="menuitem">Promo</a></li>
+                <li role="none"><a href="#contact" role="menuitem">Kontak</a></li>
+            </ul>
+            <button id="mobileMenuBtn" aria-label="Open mobile menu" aria-expanded="false" type="button">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+        </nav>
+        <div id="mobileMenu" role="menu" aria-label="Mobile navigation">
+            <a href="#home" role="menuitem">Beranda</a>
+            <a href="#scripts" role="menuitem">Script Bot</a>
+            <a href="#services" role="menuitem">Jasa Digital</a>
+            <a href="#promo" role="menuitem">Promo</a>
+            <a href="#contact" role="menuitem">Kontak</a>
+        </div>
+    </header>
 
-    <div class="bg-particle particle-1"></div>
-    <div class="bg-particle particle-2"></div>
-    <div class="bg-particle particle-3"></div>
-    <div class="bg-particle particle-4"></div>
-    <div class="bg-particle particle-5"></div>
-
-    <div class="container">
-        <div class="top-section">
-            <div class="status-indicator">
-                <div class="status-dot"></div>
-                ONLINE
-            </div>
-
-            <div class="theme-toggle">🌙</div>
-            
-            <div class="header">
-                <div class="logo-wrapper">
-                    <div class="outer-circle"></div>
-                    <div class="middle-circle"></div>
-                    <div class="inner-circle"></div>
-                    <div class="logo-circle">
-                        <div class="wallet-icon"></div>
-                    </div>
-                    <div class="notification-badge">5</div>
-                </div>
-                <h1 class="title">Payment<br>kai</h1>
-                <p class="subtitle">Sistem pembayaran terdepan untuk transaksi yang aman dan cepat</p>
+    <section id="home" role="region" aria-label="Hero section">
+        <div class="decorative-icon" aria-hidden="true">⚙️</div>
+        <div class="decorative-icon" aria-hidden="true">🚀</div>
+        <div class="decorative-icon" aria-hidden="true">🤖</div>
+        <div class="hero-container">
+            <h1>Cari Script Bot atau Jasa Digital? Semua Ada di Sini ⚙️🚀</h1>
+            <p>Tanpa ribet, tanpa login. Klik, lihat, langsung pesan.</p>
+            <div class="hero-buttons">
+                <a href="#scripts" class="btn-primary animate-fadeInUp" style="animation-delay: 0.5s;">🛒 Lihat Produk</a>
+                <a href="#services" class="btn-secondary animate-fadeInUp" style="animation-delay: 0.7s;">🛠️ Butuh Bantuan Bot?</a>
             </div>
         </div>
+    </section>
 
-        <div class="main-content">
-            <div class="stats-section">
-                <div class="stat-card">
-                    <div class="stat-number">24/7</div>
-                    <div class="stat-label">Aktif</div>
+    <section id="scripts" class="fade-in-on-scroll" role="region" aria-label="Script Bot Terbaik">
+        <h2 class="section-title">🤖 Script Bot Terbaik</h2>
+        <div class="product-grid">
+            <article class="product-card" role="article" aria-labelledby="prod1-title">
+                <span class="product-tag trending animate-bounce" aria-label="Trending product">🔥 Trending</span>
+                <h3 id="prod1-title" class="product-title">WhatsApp Bot All-in-One</h3>
+                <ul class="product-features">
+                    <li>Auto Reply & Welcome Message</li>
+                    <li>Downloader (YouTube, TikTok, IG)</li>
+                    <li>AI ChatGPT Integration</li>
+                    <li>Group Management Tools</li>
+                    <li>Anti-Link & Anti-Spam</li>
+                </ul>
+                <div class="product-price">Rp 150.000</div>
+                <div class="product-buttons">
+                    <button class="btn-small btn-outline" type="button" onclick="openModal(event, 'wa-bot')">Lihat Detail</button>
+                    <a href="https://wa.me/6282126446272?text=Halo, saya ingin pesan WhatsApp Bot All-in-One dari KaizelScript Store, masih tersedia kah?" class="btn-small btn-success animate-glow" target="_blank" rel="noopener noreferrer" role="button">🟢 Pesan WA</a>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">ribuan</div>
-                    <div class="stat-label">testi</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">murah</div>
-                    <div class="stat-label">meriah🥵</div>
-                </div>
-            </div>
+            </article>
 
-            <h2 class="section-title">Metode Pembayaran</h2>
-            <p class="section-description">Pilih metode pembayaran yang paling nyaman untuk Anda. Semua transaksi dilindungi dengan teknologi enkripsi military-grade dan sistem keamanan berlapis.</p>
-            
-            <div class="payment-card" data-method="DANA" data-number="082126446272">
-                <div class="payment-content">
-                    <div class="payment-icon dana">
-                        <div class="icon-phone"></div>
-                    </div>
-                    <div class="payment-info">
-                        <div class="payment-name">DANA</div>
-                        <div class="payment-desc">Transfer instan • Tanpa biaya admin • Proses otomatis</div>
-                        <div class="payment-number">082126446272</div>
-                    </div>
-                    <div class="payment-arrow">
-                        <div class="arrow-icon"></div>
-                    </div>
+            <article class="product-card" role="article" aria-labelledby="prod2-title">
+                <span class="product-tag ai animate-bounce" aria-label="AI product">🧠 AI</span>
+                <h3 id="prod2-title" class="product-title">Discord Bot Multi-Function</h3>
+                <ul class="product-features">
+                    <li>Music Bot & Radio Stream</li>
+                    <li>Moderation Commands</li>
+                    <li>Custom Economy System</li>
+                    <li>Reaction Roles</li>
+                    <li>Welcome/Leave Messages</li>
+                </ul>
+                <div class="product-price">Rp 200.000</div>
+                <div class="product-buttons">
+                    <button class="btn-small btn-outline" type="button" onclick="openModal(event, 'discord-bot')">Lihat Detail</button>
+                    <a href="https://wa.me/6282126446272?text=Halo, saya ingin pesan Discord Bot Multi-Function dari KaizelScript Store, masih tersedia kah?" class="btn-small btn-success animate-glow" target="_blank" rel="noopener noreferrer" role="button">🟢 Pesan WA</a>
                 </div>
-            </div>
+            </article>
 
-            <div class="payment-card" data-method="OVO" data-number="082126446272">
-                <div class="payment-content">
-                    <div class="payment-icon ovo">
-                        <div class="icon-phone"></div>
-                    </div>
-                    <div class="payment-info">
-                        <div class="payment-name">OVO</div>
-                        <div class="payment-desc">Transfer real-time • Cashback tersedia • Aman terpercaya</div>
-                        <div class="payment-number">082126446272</div>
-                    </div>
-                    <div class="payment-arrow">
-                        <div class="arrow-icon"></div>
-                    </div>
+            <article class="product-card" role="article" aria-labelledby="prod3-title">
+                <span class="product-tag premium animate-bounce" aria-label="Premium product">💻 Premium</span>
+                <h3 id="prod3-title" class="product-title">Telegram Bot Business</h3>
+                <ul class="product-features">
+                    <li>Payment Gateway Integration</li>
+                    <li>Customer Support System</li>
+                    <li>Product Catalog Management</li>
+                    <li>Order Tracking</li>
+                    <li>Analytics Dashboard</li>
+                </ul>
+                <div class="product-price">Rp 300.000</div>
+                <div class="product-buttons">
+                    <button class="btn-small btn-outline" type="button" onclick="openModal(event, 'telegram-bot')">Lihat Detail</button>
+                    <a href="https://wa.me/6282126446272?text=Halo, saya ingin pesan Telegram Bot Business dari KaizelScript Store, masih tersedia kah?" class="btn-small btn-success animate-glow" target="_blank" rel="noopener noreferrer" role="button">🟢 Pesan WA</a>
                 </div>
-            </div>
+            </article>
+        </div>
+    </section>
 
-            <div class="payment-card" data-method="GoPay" data-number="082126446272">
-                <div class="payment-content">
-                    <div class="payment-icon gopay">
-                        <div class="icon-phone"></div>
-                    </div>
-                    <div class="payment-info">
-                        <div class="payment-name">GoPay</div>
-                        <div class="payment-desc">Pembayaran kilat • Integrasi Gojek • Bonus poin</div>
-                        <div class="payment-number">082126446272</div>
-                    </div>
-                    <div class="payment-arrow">
-                        <div class="arrow-icon"></div>
-                    </div>
+    <section id="services" class="fade-in-on-scroll" role="region" aria-label="Jasa Digital Profesional">
+        <h2 class="section-title">🛠️ Jasa Digital Profesional</h2>
+        <div class="product-grid">
+            <article class="product-card" role="article" aria-labelledby="serv1-title">
+                <span class="product-tag animate-bounce" aria-label="Instalasi service">☑️ Instalasi</span>
+                <h3 id="serv1-title" class="product-title">Instalasi Bot di VPS</h3>
+                <ul class="product-features">
+                    <li>Setup VPS dari awal</li>
+                    <li>Install dependencies</li>
+                    <li>Konfigurasi domain</li>
+                    <li>SSL Certificate</li>
+                    <li>Monitoring & backup</li>
+                </ul>
+                <div class="product-price">Rp 100.000</div>
+                <div class="product-buttons">
+                    <button class="btn-small btn-outline" type="button" onclick="openModal(event, 'vps-install')">Lihat Detail</button>
+                    <a href="https://wa.me/6282126446272?text=Halo, saya ingin pesan jasa Instalasi Bot di VPS dari KaizelScript Store, masih tersedia kah?" class="btn-small btn-success animate-glow" target="_blank" rel="noopener noreferrer" role="button">🟢 Pesan WA</a>
                 </div>
-            </div>
+            </article>
 
-            <div class="payment-card" data-method="QRIS" data-number="https://example.com/qr-payment">
-                <div class="payment-content">
-                    <div class="payment-icon qris">
-                        <div class="icon-qris"></div>
-                    </div>
-                    <div class="payment-info">
-                        <div class="payment-name">QRIS</div>
-                        <div class="payment-desc">Scan & bayar • Universal payment • Semua bank</div>
-                        <div class="payment-number">Universal Payment</div>
-                    </div>
-                    <div class="payment-arrow">
-                        <div class="arrow-icon"></div>
-                    </div>
+            <article class="product-card" role="article" aria-labelledby="serv2-title">
+                <span class="product-tag animate-bounce" aria-label="Modifikasi service">⚙️ Modifikasi</span>
+                <h3 id="serv2-title" class="product-title">Custom Fitur Bot</h3>
+                <ul class="product-features">
+                    <li>Tambah fitur sesuai kebutuhan</li>
+                    <li>Integrasi API eksternal</li>
+                    <li>Custom command</li>
+                    <li>Database optimization</li>
+                    <li>Testing & debugging</li>
+                </ul>
+                <div class="product-price">Rp 150.000</div>
+                <div class="product-buttons">
+                    <button class="btn-small btn-outline" type="button" onclick="openModal(event, 'custom-feature')">Lihat Detail</button>
+                    <a href="https://wa.me/6282126446272?text=Halo, saya ingin pesan jasa Custom Fitur Bot dari KaizelScript Store, masih tersedia kah?" class="btn-small btn-success animate-glow" target="_blank" rel="noopener noreferrer" role="button">🟢 Pesan WA</a>
                 </div>
-            </div>
+            </article>
 
-            <div class="payment-card" data-method="Bank Transfer" data-number="1234567890 (BCA)">
-                <div class="payment-content">
-                    <div class="payment-icon bank">
-                        <div class="icon-bank"></div>
-                    </div>
-                    <div class="payment-info">
-                        <div class="payment-name">Bank Transfer</div>
-                        <div class="payment-desc">Transfer manual • Semua bank • Verifikasi otomatis</div>
-                        <div class="payment-number">1234567890 (BCA)</div>
-                    </div>
-                    <div class="payment-arrow">
-                        <div class="arrow-icon"></div>
-                    </div>
+            <article class="product-card" role="article" aria-labelledby="serv3-title">
+                <span class="product-tag animate-bounce" aria-label="Deploy service">🚀 Deploy</span>
+                <h3 id="serv3-title" class="product-title">Deploy ke Cloud Platform</h3>
+                <ul class="product-features">
+                    <li>Deploy ke Heroku/Railway</li>
+                    <li>Environment setup</li>
+                    <li>Database configuration</li>
+                    <li>Auto scaling setup</li>
+                    <li>Monitoring & maintenance</li>
+                </ul>
+                <div class="product-price">Rp 250.000</div>
+                <div class="product-buttons">
+                    <button class="btn-small btn-outline" type="button" onclick="openModal(event, 'cloud-deploy')">Lihat Detail</button>
+                    <a href="https://wa.me/6282126446272?text=Halo, saya ingin pesan jasa Deploy ke Cloud Platform dari KaizelScript Store, masih tersedia kah?" class="btn-small btn-success animate-glow" target="_blank" rel="noopener noreferrer" role="button">🟢 Pesan WA</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section id="promo" role="region" aria-label="Promo Spesial Terbatas">
+        <div class="promo-banner">
+            <h2>🎉 Promo Spesial Terbatas!</h2>
+            <p>Dapatkan diskon besar untuk semua produk dan jasa kami. Jangan sampai ketinggalan!</p>
+            <div class="countdown" role="list" aria-label="Countdown timer">
+                <div class="countdown-item animate-bounce" role="listitem" aria-label="Hari">
+                    <span id="countdown-days" class="countdown-number">00</span>
+                    <span class="countdown-label">Hari</span>
+                </div>
+                <div class="countdown-item animate-bounce" role="listitem" aria-label="Jam">
+                    <span id="countdown-hours" class="countdown-number">00</span>
+                    <span class="countdown-label">Jam</span>
+                </div>
+                <div class="countdown-item animate-bounce" role="listitem" aria-label="Menit">
+                    <span id="countdown-minutes" class="countdown-number">00</span>
+                    <span class="countdown-label">Menit</span>
+                </div>
+                <div class="countdown-item animate-bounce" role="listitem" aria-label="Detik">
+                    <span id="countdown-seconds" class="countdown-number">00</span>
+                    <span class="countdown-label">Detik</span>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div id="paymentModal" class="modal">
+    <section id="contact" class="fade-in-on-scroll" role="region" aria-label="Kontak Kami">
+        <h2 class="section-title">📞 Kontak Kami</h2>
+        <div class="contact-grid">
+            <div class="contact-card" role="article" aria-labelledby="contact-phone">
+                <i class="fas fa-phone contact-icon animate-bounce" aria-hidden="true"></i>
+                <h3 id="contact-phone">Telepon</h3>
+                <p><a href="tel:+6282126446272">+62 821-2644-6272</a></p>
+            </div>
+            <div class="contact-card" role="article" aria-labelledby="contact-email">
+                <i class="fas fa-envelope contact-icon animate-bounce" aria-hidden="true"></i>
+                <h3 id="contact-email">Email</h3>
+                <p><a href="mailto:support@kaizelscriptstore.id">support@kaizelscriptstore.id</a></p>
+            </div>
+            <div class="contact-card" role="article" aria-labelledby="contact-address">
+                <i class="fas fa-map-marker-alt contact-icon animate-bounce" aria-hidden="true"></i>
+                <h3 id="contact-address">Alamat</h3>
+                <p>Jl. Merdeka No. 123, Jakarta, Indonesia</p>
+            </div>
+        </div>
+    </section>
+
+    <div id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
         <div class="modal-content">
-            <h3 class="modal-title" id="modalTitle">Pembayaran</h3>
-            <img id="modalQrImage" src="" alt="QR Code Pembayaran">
-            <div id="modalNumberWrapper">
-                <div class="modal-number" id="modalNumber"></div>
-                <div class="modal-buttons">
-                    <button class="modal-btn btn-copy">📋 Salin Nomor</button>
-                    <button class="modal-btn btn-close">✕ Tutup</button>
-                </div>
-            </div>
-            <div class="modal-buttons" id="modalCloseBtnWrapper" style="display: none;">
-                <button class="modal-btn btn-close">✕ Tutup</button>
-            </div>
-            <div class="copy-success" id="copySuccess">✓ Berhasil disalin ke clipboard!</div>
+            <button id="modalClose" class="modal-close" aria-label="Close modal" type="button">×</button>
+            <div id="modalContent"></div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                document.getElementById('loadingOverlay').classList.add('hidden');
-            }, 1500);
+        document.body.setAttribute('data-theme', 'dark');
 //chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
-            const modal = document.getElementById('paymentModal');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalNumber = document.getElementById('modalNumber');
-            const modalQrImage = document.getElementById('modalQrImage');
-            const modalNumberWrapper = document.getElementById('modalNumberWrapper');
-            const modalCloseBtnWrapper = document.getElementById('modalCloseBtnWrapper');
-            const copySuccess = document.getElementById('copySuccess');
-            const themeToggle = document.querySelector('.theme-toggle');
-            
-            let currentNumberToCopy = '';
-//chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
-            const showModal = (method, number) => {
-                copySuccess.style.display = 'none';
-                
-                if (method === 'QRIS') {
-                    modalTitle.textContent = '🔍 Pembayaran QRIS';
-                    const qrApiUrl = `https://telegra.ph/file/e0b122e3b289b97e168ff.jpg`;
-                    modalQrImage.src = qrApiUrl;
-                    modalQrImage.style.display = 'block';
-                    modalNumberWrapper.style.display = 'none';
-                    modalCloseBtnWrapper.style.display = 'flex';
-                } else {
-                    let icon = '💳';
-                    if (method === 'DANA') icon = '📱';
-                    if (method === 'OVO') icon = '🟣';
-                    if (method === 'GoPay') icon = '🟢';
-                    if (method === 'Bank Transfer') icon = '🏦';
-     //chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//               
-                    modalTitle.textContent = `${icon} Pembayaran ${method}`;
-                    modalNumber.textContent = number;
-                    currentNumberToCopy = number;
-                    modalQrImage.style.display = 'none';
-                    modalNumberWrapper.style.display = 'block';
-                    modalCloseBtnWrapper.style.display = 'none';
-                }
-           //chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//     
-                modal.style.display = 'block';
-                setTimeout(() => modal.classList.add('show'), 50);
-                
-                if (navigator.vibrate) {
-                    navigator.vibrate(50);
-                }
-            };
-//chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
-            const closeModal = () => {
-                modal.classList.remove('show');
-                setTimeout(() => {
-                    modal.style.display = 'none';
-                }, 400);
-            };
-//chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
-            const copyNumber = async () => {
-                try {
-                    await navigator.clipboard.writeText(currentNumberToCopy);
-                    copySuccess.innerHTML = '✅ Nomor berhasil disalin ke clipboard tod🤑!';
-                    copySuccess.style.display = 'block';
-                    
-                    if (navigator.vibrate) {
-                        navigator.vibrate([50, 50, 50]);
-                    }
-                    
-                    setTimeout(() => {
-                        copySuccess.style.display = 'none';
-                    }, 3500);
-                } catch (err) {
-                    const textArea = document.createElement('textarea');
-                    textArea.value = currentNumberToCopy;
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textArea);
-                    
-                    copySuccess.innerHTML = '✅ Nomor berhasil disalin!';
-                    copySuccess.style.display = 'block';
-                    
-                    setTimeout(() => {
-                        copySuccess.style.display = 'none';
-                    }, 3000);
-                }
-            };
-//chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
-            document.querySelectorAll('.payment-card').forEach(card => {
-                card.addEventListener('click', (e) => {
-                    const method = card.dataset.method;
-                    const number = card.dataset.number;
-                    showModal(method, number);
-                });
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        let mobileMenuOpen = false;
 
-                card.addEventListener('click', function(e) {
-                    const ripple = document.createElement('div');
-                    const rect = this.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    ripple.style.cssText = `
-                        position: absolute;
-                        border-radius: 50%;
-                        background: rgba(255, 255, 255, 0.3);
-                        width: 4px;
-                        height: 4px;
-                        left: ${x}px;
-                        top: ${y}px;
-                        animation: ripple 0.6s linear;
-                        pointer-events: none;
-                        z-index: 1000;
-                    `;
-                    
-                    this.appendChild(ripple);
-                    
-                    setTimeout(() => {
-                        ripple.remove();
-                    }, 600);
-                });
-            });
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuOpen = !mobileMenuOpen;
+            mobileMenu.classList.toggle('open', mobileMenuOpen);
+            mobileMenuBtn.innerHTML = mobileMenuOpen
+                ? '<i class="fas fa-times" aria-hidden="true"></i>'
+                : '<i class="fas fa-bars" aria-hidden="true"></i>';
+            mobileMenuBtn.setAttribute('aria-expanded', mobileMenuOpen);
+            if (mobileMenuOpen) mobileMenu.focus();
+        });
 //chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
-            document.querySelector('.btn-copy').addEventListener('click', copyNumber);
-            document.querySelectorAll('.btn-close').forEach(btn => 
-                btn.addEventListener('click', closeModal)
-            );
-//chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
-            modal.addEventListener('click', (event) => {
-                if (event.target === modal) {
-                    closeModal();
-                }
-            });
-//chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
-            document.addEventListener('keydown', (e) => {
-                if (modal.style.display === 'block') {
-                    if (e.key === 'Escape') {
-                        closeModal();
-                    } else if (e.key === 'Enter' && modalNumberWrapper.style.display === 'block') {
-                        copyNumber();
-                    }
-                }
-            });
-//chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
-            const applyTheme = (theme) => {
-                if (theme === 'light') {
-                    document.body.classList.add('light-mode');
-                    themeToggle.textContent = '☀️';
-                } else {
-                    document.body.classList.remove('light-mode');
-                    themeToggle.textContent = '🌙';
-                }
-            };
-//chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
-            themeToggle.addEventListener('click', () => {
-                const isLight = document.body.classList.contains('light-mode');
-                const newTheme = isLight ? 'dark' : 'light';
-                applyTheme(newTheme);
-                
-                themeToggle.style.transform = 'rotate(360deg)';
-                setTimeout(() => {
-                    themeToggle.style.transform = '';
-                }, 400);
-            });
-//chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
-            const savedTheme = 'dark'; 
-            applyTheme(savedTheme);
+        const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modalContent');
+        const modalClose = document.getElementById('modalClose');
 
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes ripple {
-                    to {
-                        transform: scale(75);
-                        opacity: 0;
-                    }
-                }
-            `;
-            document.head.appendChild(style);
+        const modalData = {
+            'wa-bot': {
+                title: 'WhatsApp Bot All-in-One',
+                image: '<img src="https://placehold.co/600x300/png?text=WhatsApp+Bot+All-in-One" alt="WhatsApp Bot All-in-One with chat automation and AI features" class="rounded-xl mb-4" loading="lazy" />',
+                description: `
+                    <p>WhatsApp Bot All-in-One adalah solusi lengkap untuk mengotomatisasi komunikasi WhatsApp Anda dengan fitur-fitur canggih:</p>
+                    <ul style="list-style: disc; padding-left: 1.5rem; margin: 1rem 0;">
+                        <li>Auto Reply & Welcome Message untuk menyambut pelanggan.</li>
+                        <li>Downloader (YouTube, TikTok, IG).</li>
+                        <li>Integrasi AI ChatGPT untuk percakapan pintar.</li>
+                        <li>Alat manajemen grup yang lengkap.</li>
+                        <li>Fitur Anti-Link & Anti-Spam.</li>
+                    </ul>
+                    <p><strong>Harga: Rp 150.000</strong></p>`
+            },
+            'discord-bot': {
+                title: 'Discord Bot Multi-Function',
+                image: '<img src="https://placehold.co/600x300/png?text=Discord+Bot+Multi-Function" alt="Discord Bot with music, moderation, and economy features" class="rounded-xl mb-4" loading="lazy" />',
+                description: `
+                    <p>Discord Bot Multi-Function menyediakan berbagai fitur untuk server Discord Anda:</p>
+                    <ul style="list-style: disc; padding-left: 1.5rem; margin: 1rem 0;">
+                        <li>Music Bot & Radio Stream untuk hiburan.</li>
+                        <li>Perintah moderasi untuk menjaga ketertiban.</li>
+                        <li>Sistem ekonomi custom untuk interaksi pengguna.</li>
+                        <li>Reaction Roles untuk manajemen peran otomatis.</li>
+                        <li>Pesan sambutan dan perpisahan otomatis.</li>
+                    </ul>
+                    <p><strong>Harga: Rp 200.000</strong></p>`
+            },
+            'telegram-bot': {
+                title: 'Telegram Bot Business',
+                image: '<img src="https://placehold.co/600x300/png?text=Telegram+Bot+Business" alt="Telegram Bot with payment and business management features" class="rounded-xl mb-4" loading="lazy" />',
+                description: `
+                    <p>Telegram Bot Business membantu bisnis Anda dengan fitur-fitur berikut:</p>
+                    <ul style="list-style: disc; padding-left: 1.5rem; margin: 1rem 0;">
+                        <li>Integrasi Payment Gateway.</li>
+                        <li>Sistem dukungan pelanggan.</li>
+                        <li>Manajemen katalog produk.</li>
+                        <li>Pelacakan pesanan.</li>
+                        <li>Dashboard analitik.</li>
+                    </ul>
+                    <p><strong>Harga: Rp 300.000</strong></p>`
+            },
+            'vps-install': {
+                title: 'Instalasi Bot di VPS',
+                image: '<img src="https://placehold.co/600x300/png?text=Instalasi+Bot+di+VPS" alt="VPS server setup for bot installation" class="rounded-xl mb-4" loading="lazy" />',
+                description: `
+                    <p>Layanan instalasi bot di VPS meliputi:</p>
+                    <ul style="list-style: disc; padding-left: 1.5rem; margin: 1rem 0;">
+                        <li>Setup VPS dari awal.</li>
+                        <li>Instalasi dependencies.</li>
+                        <li>Konfigurasi domain dan SSL Certificate.</li>
+                        <li>Monitoring dan backup rutin.</li>
+                    </ul>
+                    <p><strong>Harga: Rp 100.000</strong></p>`
+            },
+            'custom-feature': {
+                title: 'Custom Fitur Bot',
+                image: '<img src="https://placehold.co/600x300/png?text=Custom+Fitur+Bot" alt="Custom bot feature development" class="rounded-xl mb-4" loading="lazy" />',
+                description: `
+                    <p>Layanan modifikasi dan penambahan fitur bot sesuai kebutuhan Anda:</p>
+                    <ul style="list-style: disc; padding-left: 1.5rem; margin: 1rem 0;">
+                        <li>Penambahan fitur custom.</li>
+                        <li>Integrasi API eksternal.</li>
+                        <li>Custom command sesuai permintaan.</li>
+                        <li>Optimasi database.</li>
+                        <li>Testing dan debugging.</li>
+                    </ul>
+                    <p><strong>Harga: Rp 150.000</strong></p>`
+            },
+            'cloud-deploy': {
+                title: 'Deploy ke Cloud Platform',
+                image: '<img src="https://placehold.co/600x300/png?text=Deploy+ke+Cloud+Platform" alt="Cloud platform deployment for bots" class="rounded-xl mb-4" loading="lazy" />',
+                description: `
+                    <p>Layanan deploy bot ke platform cloud seperti Heroku dan Railway:</p>
+                    <ul style="list-style: disc; padding-left: 1.5rem; margin: 1rem 0;">
+                        <li>Deploy ke Heroku/Railway.</li>
+                        <li>Setup environment.</li>
+                        <li>Konfigurasi database.</li>
+                        <li>Setup auto scaling.</li>
+                        <li>Monitoring dan maintenance.</li>
+                    </ul>
+                    <p><strong>Harga: Rp 250.000</strong></p>`
+            }
+        };
 //chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
-            document.documentElement.style.scrollBehavior = 'smooth';
+        function openModal(event, key) {
+            event.stopPropagation();
+            if (!modalData[key]) {
+                console.error('Invalid modal key:', key);
+                return;
+            }
+            modalContent.innerHTML = `
+                <h3 id="modalTitle" class="text-2xl font-bold mb-4">${modalData[key].title}</h3>
+                <div id="modalDesc">${modalData[key].image}${modalData[key].description}</div>`;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            modal.focus();
+        }
+//chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            modalContent.innerHTML = '';
+        }
+//chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
+        modalClose.addEventListener('click', closeModal);
 
-            if (window.performance) {
-                window.addEventListener('load', () => {
-                    const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
-                    console.log(`⚡ Halaman kntol ${loadTime}ms`);
-                });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
             }
         });
 //chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                console.log('🔧 Service Worker PWA');
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+//chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
+        const fadeEls = document.querySelectorAll('.fade-in-on-scroll');
+        function checkFade() {
+            fadeEls.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.9) {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                    el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                }
             });
         }
+
+        window.addEventListener('scroll', debounce(checkFade, 100));
+        window.addEventListener('load', checkFade);
+//chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//
+        function startCountdown() {
+            const promoEndDate = new Date();
+            promoEndDate.setDate(promoEndDate.getDate() + 2);
+
+            const x = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = promoEndDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+     //chanell:https://whatsapp.com/channel/0029VanrndJICVfcrjFr3x2R//           
+                document.getElementById("countdown-days").textContent = String(days).padStart(2, '0');
+                document.getElementById("countdown-hours").textContent = String(hours).padStart(2, '0');
+                document.getElementById("countdown-minutes").textContent = String(minutes).padStart(2, '0');
+                document.getElementById("countdown-seconds").textContent = String(seconds).padStart(2, '0');
+
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("countdown-days").textContent = "00";
+                    document.getElementById("countdown-hours").textContent = "00";
+                    document.getElementById("countdown-minutes").textContent = "00";
+                    document.getElementById("countdown-seconds").textContent = "00";
+                    document.querySelector('.promo-banner p').textContent = "Promo telah berakhir!";
+                }
+            }, 1000);
+        }
+        window.addEventListener('load', startCountdown);
     </script>
 </body>
-</hhtml
+</html>
